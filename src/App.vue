@@ -1,9 +1,11 @@
 <script setup>
 import BooksTable from "./components/BooksTable.vue";
 import BookForm from "./components/BookForm.vue";
+import LoginForm from "./components/LoginForm.vue";
 </script>
 
 <template>
+  <LoginForm />
   <BooksTable />
   <BookForm />
 </template>

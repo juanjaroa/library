@@ -3,7 +3,7 @@
     <article v-for="book in bookStore.books" :key="book.id">
       <p v-show="book.id"><strong>Id:</strong> {{ book.id }}</p>
       <p v-show="book.title">
-        <strong>Nombre del libro:</strong> {{ book.book }}
+        <strong>Nombre del libro:</strong> {{ book.title }}
       </p>
       <p v-show="book.author"><strong>Autor:</strong> {{ book.author }}</p>
       <p v-show="book.category">

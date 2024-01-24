@@ -171,36 +171,4 @@ const resetFormData = () => {
   formData.dimensions = "";
 };
 </script>
-<style scoped>
-section > input,
-div.status,
-fieldset {
-  width: 100%;
-}
-section > input {
-  padding: 0.25rem 0.5rem;
-}
-div.status {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-input[type="checkbox"] {
-  margin: 0;
-}
-input[type="radio"] {
-  margin: 0 0.25rem 0 0;
-}
-fieldset {
-  display: flex;
-  gap: 1rem;
-}
-fieldset.vertical {
-  flex-direction: column;
-  gap: 0.5rem;
-}
-input[type="submit"] {
-  margin-top: 1rem;
-  color-scheme: light;
-}
-</style>
+<style scoped></style>
