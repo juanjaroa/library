@@ -1,0 +1,32 @@
+[
+  {
+    "id": "0001",
+    "book": "Secreto de los andes",
+    "author": "Josephine",
+    "category": "Historia",
+    "isNew": false,
+    "price": 5000,
+    "numberOfPages": 250,
+    "publisher": "Skrybe",
+    "coverType": "dura",
+    "edition": "primera",
+    "isIllustrated": false,
+    "isFullColor": false,
+    "dimensions": "27,5x23"
+  },
+  {
+    "id": "0002",
+    "book": "Azteca",
+    "author": "Gary James",
+    "category": "Historia",
+    "isNew": true,
+    "price": 6000,
+    "numberOfPages": 1000,
+    "publisher": "Skrybe",
+    "coverType": "blanda",
+    "edition": "primera",
+    "isIllustrated": false,
+    "isFullColor": false,
+    "dimensions": "27,5x32"
+  }
+]
