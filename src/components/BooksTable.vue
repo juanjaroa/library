@@ -1,17 +1,26 @@
 <template>
   <DataTable
     :value="bookStore.books"
-    size="small"
-    dataKey="id"
     resizableColumns
     columnResizeMode="expand"
+    size="small"
   >
+    <template #header>
+      <div class="table-header">
+        <span>Books</span>
+        <Button icon="pi pi-refresh" rounded outlined />
+      </div>
+    </template>
     <template #empty> No books found. </template>
     <template #loading> Loading books data. Please wait. </template>
     <Column field="id" header="id"></Column>
     <Column field="title" header="Titulo"></Column>
     <Column field="author" header="Autor"></Column>
-    <Column field="category" header="Categoria"></Column>
+    <Column field="category" header="Categoria">
+      <template #body="slotProps">
+        <Tag rounded :value="slotProps.data.category"></Tag>
+      </template>
+    </Column>
     <Column field="price" header="Precio">
       <template #body="slotProps">
         <span style="font-weight: 600; color: var(--highlight-text-color)"
@@ -21,10 +30,34 @@
     </Column>
     <Column header="acciones">
       <template #body="slotProps">
-        <button>edit</button>
+        <div style="display: flex; gap: 0.5rem">
+          <Button
+            icon="pi pi-pencil"
+            aria-label="Edit book"
+            rounded
+            outlined
+            size="small"
+            severity="secondary"
+            @click="selectBook(slotProps.data.id, 'toEdit')"
+          />
+          <Button
+            icon="pi pi-eye"
+            aria-label="See details"
+            rounded
+            outlined
+            size="small"
+            @click="selectBook(slotProps.data.id, 'toSee')"
+          />
+        </div>
       </template>
     </Column>
   </DataTable>
+  <SingleBook
+    :showBook="showBook"
+    v-if="showBook"
+    @null-book="showBook = null"
+  />
+
   <!-- <section>
     <article v-for="book in bookStore.books" :key="book.id">
       <p v-show="book.id"><strong>Id:</strong> {{ book.id }}</p>
@@ -56,15 +89,27 @@
   </section> -->
 </template>
 <script setup>
+import { reactive } from "vue";
 import { useBookStore } from "@/stores/BookStore";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Button from "primevue/button";
+import Tag from "primevue/tag";
+import SingleBook from "@/components/SingleBook.vue";
 
 // Obtiene la referencia al store de catálogo
 const bookStore = useBookStore();
 
 bookStore.fill();
+
+const showBook = reactive(null);
+
+const selectBook = (bookId, mode) => {
+  showBook = {
+    id: bookId,
+    mode: mode,
+  };
+};
 </script>
 <style>
 article {
@@ -79,6 +124,21 @@ article hr {
 }
 article:last-of-type hr {
   display: none;
+}
+
+.p-datatable {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0.75rem 0.25rem;
+  span {
+    font-size: 1.5rem;
+  }
 }
 
 td,
@@ -96,26 +156,29 @@ th {
     display: none;
   }
   tr {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     gap: 0 0.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
   td {
-    max-width: fit-content;
+    display: block;
+    border: none;
+    white-space: break-spaces;
   }
   td:nth-child(1) {
-    display: none;
   }
   td:nth-child(2),
-  td:nth-child(3) {
-    flex-grow: 2;
+  td:nth-child(3),
+  td:nth-child(6) {
+    grid-column-start: 1;
+    grid-column-end: -1;
   }
 }
 
 @media (min-width: 768px) {
   td,
   th {
-    padding: 0 0.65rem;
+    padding: 0.25rem 0.75rem;
     white-space: nowrap;
     text-align: left;
     overflow: hidden;
