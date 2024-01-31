@@ -1,16 +1,19 @@
+import "./style.css";
 import { createApp } from "vue";
+import router from "@/router";
 import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
-import "./style.css";
+
 import App from "./App.vue";
 
-/* import "primevue/resources/themes/lara-light-green/theme.css"; // Tema */
+import "primevue/resources/themes/aura-dark-amber/theme.css"; // Tema
 import "primevue/resources/primevue.min.css"; // Estilos generales
 import "primeicons/primeicons.css"; // Iconos
 
 const pinia = createPinia();
 const app = createApp(App);
 
+app.use(router);
 app.use(pinia);
-app.use(PrimeVue);
+app.use(PrimeVue, { inputStyle: "outlined", ripple: true });
 app.mount("#app");
