@@ -1,16 +1,12 @@
 <script setup>
 import { useRouter, RouterView } from "vue-router";
-import { useAuthStore } from "@/stores/AuthStore";
 import { ref } from "vue";
 import SpeedDial from "primevue/speeddial";
 import BooksTable from "./components/BooksTable.vue";
-import BookForm from "./components/BookForm.vue";
-import LoginForm from "./components/LoginForm.vue";
 
 const router = useRouter();
-const authStore = useAuthStore();
 
-const items = ref([
+const navItems = ref([
   {
     label: "Home",
     icon: "pi pi-home",
@@ -44,11 +40,9 @@ const items = ref([
 
 <template>
   <RouterView />
-
-  <BookForm v-if="authStore.localSession?.data.session" />
   <BooksTable />
   <SpeedDial
-    :model="items"
+    :model="navItems"
     :tooltipOptions="{ position: 'left' }"
     buttonClass="p-button-outlined"
     showIcon="pi pi-bars"
