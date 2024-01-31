@@ -1,113 +1,183 @@
 <template>
   <section>
-    <input type="text" name="id" placeholder="id" v-model="formData.id" />
-    <input
-      type="text"
-      name="book"
-      placeholder="Nombre del libro"
-      v-model="formData.book"
-    />
-    <input
-      type="text"
-      name="author"
-      placeholder="Nombre del autor"
-      v-model="formData.author"
-    />
-    <input
-      type="text"
-      name="category"
-      placeholder="Categoria"
-      v-model="formData.category"
-    />
-    <input
-      type="number"
-      name="price"
-      placeholder="Precio"
-      v-model="formData.price"
-    />
-    <input
-      type="number"
-      name="pages"
-      placeholder="Numero de paginas"
-      v-model="formData.numberOfPages"
-    />
-    <input
-      type="text"
-      name="publisher"
-      placeholder="Editorial"
-      v-model="formData.publisher"
-    />
+    <Fieldset class="grid" :legend="formData.book || 'Nuevo libro'">
+      <span class="p-float-label">
+        <InputText
+          type="text"
+          name="book-id"
+          id="book-id"
+          v-model="formData.id"
+          placeholder="0000"
+          class="w-full"
+          size="small"
+        />
+        <label for="book-id">Id del Libro</label>
+      </span>
+      <span class="p-float-label">
+        <InputText
+          type="text"
+          name="book-title"
+          id="book-title"
+          v-model="formData.book"
+          placeholder="Increible historia"
+          class="w-full"
+          size="small"
+        />
+        <label for="book-title">Titulo del libro</label>
+      </span>
+      <span class="p-float-label">
+        <InputText
+          type="text"
+          name="author"
+          id="author"
+          v-model="formData.author"
+          placeholder="Jane Doe"
+          class="w-full"
+          size="small"
+        />
+        <label for="author">Nombre del autor</label>
+      </span>
+      <span class="p-float-label">
+        <InputText
+          type="text"
+          name="category"
+          id="category"
+          v-model="formData.category"
+          placeholder="Crónica"
+          class="w-full"
+          size="small"
+        />
+        <label for="category">Categoria / Genero</label>
+      </span>
+      <span class="p-float-label">
+        <InputNumber
+          name="price"
+          id="price"
+          v-model="formData.price"
+          placeholder="5000"
+          class="w-full"
+          size="small"
+        />
+        <label for="price">Precio</label>
+      </span>
+      <span class="p-float-label">
+        <InputNumber
+          name="pages"
+          id="pages"
+          v-model="formData.numberOfPages"
+          placeholder="300"
+          class="w-full"
+          size="small"
+        />
+        <label for="pages">Numero de paginas</label>
+      </span>
+      <span class="p-float-label">
+        <InputText
+          name="publisher"
+          id="publisher"
+          v-model="formData.publisher"
+          placeholder="Editorial Jaguar"
+          class="w-full"
+          size="small"
+        />
+        <label for="publisher">Editorial</label>
+      </span>
+      <span class="p-float-label">
+        <InputText
+          name="edition"
+          id="edition"
+          v-model="formData.edition"
+          placeholder="Primera"
+          class="w-full"
+          size="small"
+        />
+        <label for="edition">Edición</label>
+      </span>
+      <span class="p-float-label">
+        <InputText
+          name="dimensions"
+          id="dimensions"
+          v-model="formData.dimensions"
+          placeholder="25x18,6"
+          class="w-full"
+          size="small"
+        />
+        <label for="dimensions">Tamaño</label>
+      </span>
+    </Fieldset>
 
-    <input
-      type="text"
-      name="edition"
-      placeholder="Edición"
-      v-model="formData.edition"
-    />
+    <div class="fieldsets-container">
+      <Fieldset legend="Tipo de portada" class="cover">
+        <label>
+          <RadioButton
+            v-model="formData.coverType"
+            inputId="type-1"
+            name="cover-type"
+            value="Dura"
+          />
+          Dura</label
+        >
+        <label>
+          <RadioButton
+            v-model="formData.coverType"
+            inputId="type-2"
+            name="cover-type"
+            value="Semi-dura"
+          />
+          Semi-dura</label
+        >
+        <label>
+          <RadioButton
+            v-model="formData.coverType"
+            inputId="type-3"
+            name="cover-type"
+            value="Blanda"
+          />
+          Blanda</label
+        >
+      </Fieldset>
 
-    <input
-      type="text"
-      name="dimensions"
-      placeholder="Tamaño"
-      v-model="formData.dimensions"
-    />
-    <fieldset>
-      <legend>Seleccciona el tipo de portada:</legend>
-      <div>
-        <input
-          type="radio"
-          id="tapa-dura"
-          name="coverType"
-          value="tapa-dura"
-          v-model="formData.coverType"
-        />
-        <label for="tapa-dura">Dura</label>
-      </div>
-      <div>
-        <input
-          type="radio"
-          id="tapa-blanda"
-          name="coverType"
-          value="tapa-blanda"
-          v-model="formData.coverType"
-        />
-        <label for="tapa-blanda">Blanda</label>
-      </div>
-    </fieldset>
-    <fieldset class="vertical">
-      <legend>Otras caracteristicas:</legend>
-      <div class="status">
-        <label for="is-new">Nuevo:</label>
-        <input
-          type="checkbox"
-          name="is-new"
-          id="is-new"
-          v-model="formData.isNew"
-        />
-      </div>
-      <div class="status">
-        <label for="is-illustrated">Ilustrado:</label>
-        <input
-          type="checkbox"
-          name="is-illustrated"
-          id="is-illustrated"
-          v-model="formData.isIllustrated"
-        />
-      </div>
-      <div class="status">
-        <label for="is-full-color">Full-color:</label>
-        <input
-          type="checkbox"
-          name="is-full-color"
-          id="is-full-color"
-          v-model="formData.isFullColor"
-        />
-      </div>
-    </fieldset>
-    <input type="submit" value="Guardar" @click="handleSubmit" />
+      <Fieldset legend="Otras caracteristicas" class="others">
+        <label for="is-new"
+          >Nuevo:
+          <Checkbox
+            v-model="formData.isNew"
+            name="is-new"
+            inputId="is-new"
+            :binary="true"
+          />
+        </label>
+        <label for="is-illustrated"
+          >Ilustrado:
+          <Checkbox
+            v-model="formData.isIllustrated"
+            name="is-illustrated"
+            inputId="is-illustrated"
+            :binary="true"
+          />
+        </label>
+        <label for="is-full-color"
+          >Full-color:
+          <Checkbox
+            v-model="formData.isFullColor"
+            name="is-full-color"
+            inputId="is-full-color"
+            :binary="true"
+          />
+        </label>
+      </Fieldset>
+    </div>
+
+    <Button label="Guardar" outlined class="w-full" @click="handleSubmit" />
   </section>
 </template>
 <script setup>
+import InputText from "primevue/inputtext";
+import InputNumber from "primevue/inputnumber";
+import Fieldset from "primevue/fieldset";
+import RadioButton from "primevue/radiobutton";
+import Checkbox from "primevue/checkbox";
+import Button from "primevue/button";
 import { reactive } from "vue";
 import { useBookStore } from "@/stores/BookStore";
 
@@ -121,8 +191,8 @@ let formData = reactive({
   author: "",
   category: "",
   isNew: false,
-  price: "",
-  numberOfPages: "",
+  price: undefined,
+  numberOfPages: undefined,
   publisher: "",
   coverType: "",
   edition: "",
@@ -171,4 +241,13 @@ const resetFormData = () => {
   formData.dimensions = "";
 };
 </script>
-<style scoped></style>
+<style scoped>
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+button {
+  margin-top: 1rem;
+}
+</style>
