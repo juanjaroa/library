@@ -1,3 +1,6 @@
+:root{
+
+}
 body {
   margin: 0;
   width: 100%;
@@ -14,6 +17,7 @@ body {
   padding: 2rem 4.5rem 4.5rem;
   max-width: 1440px;
   gap: 4rem;
+  min-height: 100vh;
 }
 
 .p-speeddial {
@@ -38,12 +42,16 @@ input,
 }
 
 fieldset {
-  padding: 1rem 2rem 2rem;
+  padding: 2rem;
+}
+fieldset.login{
+  border-radius: 1rem;
 }
 fieldset.login .p-fieldset-content {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.75rem;
+  align-items: stretch;
 }
 fieldset.grid .p-fieldset-content {
   display: grid;
@@ -92,3 +100,20 @@ fieldset.others .p-fieldset-content label {
     padding: 1rem;
   }
 }
+
+
+.close-modal{
+  position: absolute;
+  top: -0.2rem;
+  right: -1.2rem;
+  z-index: 999;
+}
+
+.scrollable-dialog{
+  overflow: auto;
+  padding: 0 0.5rem;
+}
+/* .p-dialog{
+  overflow: auto;
+  padding: 0 0.5rem;
+} */

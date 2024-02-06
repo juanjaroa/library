@@ -1,38 +1,33 @@
 <template>
-  <section v-if="!authStore.localSession?.data.session">
-    <form @submit.prevent>
-      <Fieldset legend="Iniciar sesion" class="login">
-        <span class="p-float-label">
-          <InputText
-            id="usermail"
-            type="email"
-            v-model="email"
-            placeholder="usuario@email.com"
-            class="w-full"
-          />
-          <label for="usermail">email del usuario</label>
-        </span>
-        <span class="p-float-label">
-          <Password
-            id="password"
-            v-model="password"
-            :feedback="false"
-            toggleMask
-          />
-          <label for="password">Contraseña</label>
-        </span>
-        <Button
-          @click="signIn"
-          size="small"
-          icon="pi pi-key"
-          label="Login"
-          outlined
-        />
-      </Fieldset>
-    </form>
-  </section>
-  <section v-else>
-    <p>
+  <Fieldset
+    legend="Iniciar sesion"
+    class="login"
+    v-if="!authStore.localSession?.data.session"
+  >
+    <span class="p-float-label">
+      <InputText
+        id="usermail"
+        type="email"
+        v-model="email"
+        placeholder="usuario@email.com"
+        class="w-full"
+      />
+      <label for="usermail">email del usuario</label>
+    </span>
+    <span class="p-float-label">
+      <Password id="password" v-model="password" :feedback="false" toggleMask />
+      <label for="password">Contraseña</label>
+    </span>
+    <Button
+      @click="signIn"
+      size="small"
+      icon="pi pi-key"
+      label="Login"
+      outlined
+    />
+  </Fieldset>
+  <Fieldset legend="Sesion iniciada" class="login" v-else>
+    <p style="text-align: center">
       {{ authStore.getEmail }}
     </p>
     <Button
@@ -42,7 +37,14 @@
       severity="danger"
       outlined
     />
-  </section>
+  </Fieldset>
+  <Button
+    icon="pi pi-times"
+    rounded
+    size="small"
+    class="close-modal"
+    @click="closeModal"
+  />
 </template>
 <script setup>
 import Fieldset from "primevue/fieldset";
@@ -51,6 +53,9 @@ import Password from "primevue/password";
 import Button from "primevue/button";
 import { useAuthStore } from "@/stores/AuthStore";
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const email = ref("");
 const password = ref("");
@@ -66,14 +71,17 @@ const signIn = async () => {
 
 const signOut = async () => {
   await authStore.signOut();
+  closeModal();
+};
+
+const closeModal = () => {
+  setTimeout(() => {
+    router.push("/");
+  }, 0);
 };
 </script>
 <style>
-form {
-  min-height: 33vh;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+fieldset {
   button {
     justify-content: center;
     span.p-button-label {

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <Fieldset class="grid" :legend="formData.book || 'Nuevo libro'">
+    <Fieldset class="grid" :legend="formData.title || ''">
       <span class="p-float-label">
         <InputText
           type="text"
@@ -18,7 +18,7 @@
           type="text"
           name="book-title"
           id="book-title"
-          v-model="formData.book"
+          v-model="formData.title"
           placeholder="Increible historia"
           class="w-full"
           size="small"
@@ -54,7 +54,6 @@
           name="price"
           id="price"
           v-model="formData.price"
-          placeholder="5000"
           class="w-full"
           size="small"
         />
@@ -64,8 +63,7 @@
         <InputNumber
           name="pages"
           id="pages"
-          v-model="formData.numberOfPages"
-          placeholder="300"
+          v-model="formData.pages"
           class="w-full"
           size="small"
         />
@@ -110,7 +108,7 @@
       <Fieldset legend="Tipo de portada" class="cover">
         <label>
           <RadioButton
-            v-model="formData.coverType"
+            v-model="formData.cover_type"
             inputId="type-1"
             name="cover-type"
             value="Dura"
@@ -119,7 +117,7 @@
         >
         <label>
           <RadioButton
-            v-model="formData.coverType"
+            v-model="formData.cover_type"
             inputId="type-2"
             name="cover-type"
             value="Semi-dura"
@@ -128,7 +126,7 @@
         >
         <label>
           <RadioButton
-            v-model="formData.coverType"
+            v-model="formData.cover_type"
             inputId="type-3"
             name="cover-type"
             value="Blanda"
@@ -141,7 +139,7 @@
         <label for="is-new"
           >Nuevo:
           <Checkbox
-            v-model="formData.isNew"
+            v-model="formData.is_new"
             name="is-new"
             inputId="is-new"
             :binary="true"
@@ -150,7 +148,7 @@
         <label for="is-illustrated"
           >Ilustrado:
           <Checkbox
-            v-model="formData.isIllustrated"
+            v-model="formData.is_illustrated"
             name="is-illustrated"
             inputId="is-illustrated"
             :binary="true"
@@ -159,7 +157,7 @@
         <label for="is-full-color"
           >Full-color:
           <Checkbox
-            v-model="formData.isFullColor"
+            v-model="formData.is_full_color"
             name="is-full-color"
             inputId="is-full-color"
             :binary="true"
@@ -167,8 +165,20 @@
         </label>
       </Fieldset>
     </div>
-
-    <Button label="Guardar" outlined class="w-full" @click="handleSubmit" />
+    <Button
+      label="Actualizar"
+      outlined
+      class="w-full"
+      @click="handleUpdate"
+      v-if="props.currentBook"
+    />
+    <Button
+      label="Guardar"
+      outlined
+      class="w-full"
+      @click="handleSubmit"
+      v-else
+    />
   </section>
 </template>
 <script setup>
@@ -178,8 +188,15 @@ import Fieldset from "primevue/fieldset";
 import RadioButton from "primevue/radiobutton";
 import Checkbox from "primevue/checkbox";
 import Button from "primevue/button";
-import { reactive } from "vue";
+import { reactive, onMounted } from "vue";
 import { useBookStore } from "@/stores/BookStore";
+
+const props = defineProps({
+  currentBook: {
+    type: Object,
+    default: null, // Set a default value for currentBook
+  },
+});
 
 // Obtiene la referencia al store de catálogo
 const bookStore = useBookStore();
@@ -187,33 +204,51 @@ const bookStore = useBookStore();
 // Form fields model
 let formData = reactive({
   id: "",
-  book: "",
+  title: "",
   author: "",
   category: "",
-  isNew: false,
-  price: undefined,
-  numberOfPages: undefined,
+  is_new: false,
+  price: null,
+  pages: null,
   publisher: "",
-  coverType: "",
+  cover_type: "",
   edition: "",
-  isIllustrated: false,
-  isFullColor: false,
+  is_illustrated: false,
+  is_full_color: false,
   dimensions: "",
 });
 
 const createNewBook = () => {
   return {
-    title: formData.book,
+    title: formData.title,
     author: formData.author,
     category: formData.category,
-    is_new: formData.isNew,
+    is_new: formData.is_new,
     price: Number(formData.price),
-    pages: Number(formData.numberOfPages),
+    pages: Number(formData.pages),
     publisher: formData.publisher,
-    cover_type: formData.coverType,
+    cover_type: formData.cover_type,
     edition: formData.edition,
-    is_illustrated: formData.isIllustrated,
-    is_full_color: formData.isFullColor,
+    is_illustrated: formData.is_illustrated,
+    is_full_color: formData.is_full_color,
+    dimensions: formData.dimensions,
+  };
+};
+
+const updateBook = () => {
+  return {
+    id: formData.id,
+    title: formData.title,
+    author: formData.author,
+    category: formData.category,
+    is_new: formData.is_new,
+    price: Number(formData.price),
+    pages: Number(formData.pages),
+    publisher: formData.publisher,
+    cover_type: formData.cover_type,
+    edition: formData.edition,
+    is_illustrated: formData.is_illustrated,
+    is_full_color: formData.is_full_color,
     dimensions: formData.dimensions,
   };
 };
@@ -224,22 +259,33 @@ const handleSubmit = () => {
   resetFormData();
 };
 
+const handleUpdate = () => {
+  const book = updateBook();
+  bookStore.updateBook(book);
+};
+
 // function to reset form data
 const resetFormData = () => {
   formData.id = "";
-  formData.book = "";
+  formData.title = "";
   formData.author = "";
   formData.category = "";
-  formData.isNew = false;
-  formData.price = "";
-  formData.numberOfPages = "";
+  formData.is_new = false;
+  formData.price = null;
+  formData.pages = null;
   formData.publisher = "";
-  formData.coverType = "";
+  formData.cover_type = "";
   formData.edition = "";
-  formData.isIllustrated = false;
-  formData.isFullColor = false;
+  formData.is_illustrated = false;
+  formData.is_full_color = false;
   formData.dimensions = "";
 };
+
+onMounted(() => {
+  if (props.currentBook) {
+    Object.assign(formData, props.currentBook);
+  }
+});
 </script>
 <style scoped>
 section {
