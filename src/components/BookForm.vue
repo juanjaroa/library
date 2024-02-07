@@ -153,6 +153,7 @@
         </label>
       </Fieldset>
     </div>
+    <Toast />
     <Button
       label="Actualizar"
       outlined
@@ -178,6 +179,27 @@ import Checkbox from "primevue/checkbox";
 import Button from "primevue/button";
 import { reactive, onMounted } from "vue";
 import { useBookStore } from "@/stores/BookStore";
+import Toast from "primevue/toast";
+import { useToast } from "primevue/usetoast";
+
+const toast = useToast();
+
+const notifySubmitted = (title) => {
+  toast.add({
+    severity: "success",
+    summary: "Libro agregado!",
+    detail: `${title} se ha agregado al catálogo.`,
+    life: 5000,
+  });
+};
+const notifyUpdate = (title) => {
+  toast.add({
+    severity: "info",
+    summary: "Libro actualizado!",
+    detail: `${title} se ha actualizado correctamente.`,
+    life: 5000,
+  });
+};
 
 const props = defineProps({
   currentBook: {
@@ -245,11 +267,13 @@ const handleSubmit = () => {
   const newBook = createNewBook();
   bookStore.addBook(newBook);
   resetFormData();
+  notifySubmitted(newBook.title);
 };
 
 const handleUpdate = () => {
   const book = updateBook();
   bookStore.updateBook(book);
+  notifyUpdate(book.title);
 };
 
 // function to reset form data
