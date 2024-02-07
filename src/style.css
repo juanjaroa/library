@@ -1,5 +1,4 @@
-:root{
-
+:root {
 }
 body {
   margin: 0;
@@ -8,7 +7,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #09090B;
+  background-color: #09090b;
 }
 #app {
   width: 100%;
@@ -44,7 +43,7 @@ input,
 fieldset {
   padding: 2rem;
 }
-fieldset.login{
+fieldset.login {
   border-radius: 1rem;
 }
 fieldset.login .p-fieldset-content {
@@ -83,7 +82,7 @@ fieldset.others .p-fieldset-content label {
   justify-content: stretch;
   align-items: stretch;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 1rem 2rem;
 }
 .fieldsets-container fieldset {
   min-width: calc(50% - 1rem);
@@ -91,28 +90,59 @@ fieldset.others .p-fieldset-content label {
 }
 
 @media (max-width: 360px) {
-  fieldset.cover .p-fieldset-content label{
-    
+  fieldset.cover .p-fieldset-content label {
   }
 }
-@media(max-width: 767px) {
-  #app{
+@media (max-width: 767px) {
+  #app {
     padding: 1rem;
   }
 }
 
-
-.close-modal{
+.close-modal {
   position: absolute;
   top: -0.2rem;
   right: -1.2rem;
   z-index: 999;
 }
+.p-dialog-header-icons {
+  margin-left: auto;
+}
 
-.scrollable-dialog{
+.scrollable-dialog {
   overflow: auto;
   padding: 0 0.5rem;
 }
+
+.p-dialog-header,
+.p-dialog-content {
+  background: transparent;
+}
+
+.p-dialog-header {
+  position: relative;
+  padding: 0;
+  .custom-close-button {
+    position: absolute;
+    background: var(--primary-color);
+    color: var(--primary-color-text);
+    height: 2.5rem;
+    width: 2.5rem;
+    bottom: -2.25rem;
+    right: 0.25rem;
+    &:focus-visible {
+      outline: none;
+      outline-offset: 0;
+      
+    }
+  }
+}
+
+.centered > div
+{
+  justify-content: center;
+}
+
 /* .p-dialog{
   overflow: auto;
   padding: 0 0.5rem;

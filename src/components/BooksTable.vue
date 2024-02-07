@@ -65,27 +65,28 @@
         >
       </template>
     </Column>
-    <Column header="Acciones" body-class="actions">
+    <Column header="Acciones" body-class="actions" header-class="centered">
       <template #body="slotProps">
-        <div style="display: flex; gap: 0.5rem">
+        <div style="display: flex; gap: 0.5rem; justify-content: center">
           <Button
             icon="pi pi-eye"
             aria-label="See details"
             rounded
             outlined
-            severity="help"
             size="small"
-            @click="selectBook(slotProps.data.id, 'toSee')"
+            @click="selectBook(slotProps.data.id, 'see')"
           />
           <Button
+            v-if="authStore.localSession?.data.session"
             icon="pi pi-pencil"
             aria-label="Edit book"
             rounded
             outlined
             size="small"
-            @click="selectBook(slotProps.data.id, 'toEdit')"
+            @click="selectBook(slotProps.data.id, 'edit')"
           />
           <Button
+            v-if="authStore.localSession?.data.session"
             icon="pi pi-trash"
             aria-label="Delete book"
             severity="danger"
@@ -98,7 +99,7 @@
       </template>
     </Column>
   </DataTable>
-  <Dialog
+  <!-- <Dialog
     v-model:visible="singleBookVisible"
     modal
     dismissableMask
@@ -118,10 +119,10 @@
     }"
     contentClass="plop"
   >
-    <template #container="{ closeCallback }">
-      <SingleBook :showBook="showBook" v-if="showBook" />
-    </template>
-  </Dialog>
+    <template #container="{ closeCallback }"> -->
+  <SingleBook :showBook="showBook" v-if="showBook" />
+  <!-- </template>
+  </Dialog> -->
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
@@ -135,10 +136,14 @@ import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import Tag from "primevue/tag";
 import SingleBook from "@/components/SingleBook.vue";
-import Dialog from "primevue/dialog";
+import { useAuthStore } from "@/stores/AuthStore";
+
+const authStore = useAuthStore();
 
 // Obtiene la referencia al store de catálogo
 const bookStore = useBookStore();
+
+const loading = ref(true);
 
 onMounted(() => {
   bookStore.fill();
@@ -152,18 +157,14 @@ const filters = ref({
   category: { value: null, matchMode: FilterMatchMode.IN },
 });
 
-const loading = ref(true);
-
 const showBook = ref(null);
-
-const singleBookVisible = ref(false);
 
 const selectBook = (bookId, mode) => {
   showBook.value = {
     id: bookId,
-    mode,
+    see: mode === "see",
+    edit: mode === "edit",
   };
-  singleBookVisible.value = true;
 };
 
 const deleteBook = (bookId) => {

@@ -1,37 +1,83 @@
 <template>
-  <div
-    class="single-book-container"
-    v-if="currentBook && props.showBook.mode === 'toSee'"
+  <Dialog
+    v-model:visible="props.showBook.see"
+    modal
+    dismissableMask
+    :style="{
+      width: '40VW',
+      border: 'none',
+      background: 'none',
+    }"
+    :breakpoints="{
+      '992px': '50vw',
+      '768px': '60vw',
+      '576px': '90vw',
+    }"
+    :pt="{
+      root: 'border-none',
+      mask: {
+        style: 'backdrop-filter: blur(2px)',
+      },
+    }"
+    :closeButtonProps="{ class: 'custom-close-button' }"
   >
-    <h2>{{ currentBook.title }}</h2>
-    <h3>{{ currentBook.author }}</h3>
-    <p>Genero: {{ currentBook.category }}</p>
-    <p>Nuevo: {{ currentBook.is_new ? "Sí" : "No" }}</p>
-    <p>Precio: ${{ currentBook.price }}</p>
-    <p>Páginas: {{ currentBook.pages }}</p>
-    <p>Editorial: {{ currentBook.publisher }}</p>
-    <p>Tipo de cubierta: {{ currentBook.cover_type }}</p>
-    <p>Edición: {{ currentBook.edition }}</p>
-    <p>Ilustrado: {{ currentBook.is_illustrated ? "Sí" : "No" }}</p>
-    <p>Full color: {{ currentBook.is_full_color ? "Sí" : "No" }}</p>
-    <p>Dimensiones: {{ currentBook.dimensions }}cms</p>
-  </div>
-  <div
+    <Fieldset :legend="'ID: ' + currentBook.id">
+      <h2>{{ currentBook.title }}</h2>
+      <h3>{{ currentBook.author }}</h3>
+      <p>Genero: {{ currentBook.category }}</p>
+      <p>Nuevo: {{ currentBook.is_new ? "Sí" : "No" }}</p>
+      <p>Precio: ${{ currentBook.price }}</p>
+      <p>Páginas: {{ currentBook.pages }}</p>
+      <p>Editorial: {{ currentBook.publisher }}</p>
+      <p>Tipo de cubierta: {{ currentBook.cover_type }}</p>
+      <p>Edición: {{ currentBook.edition }}</p>
+      <p>Ilustrado: {{ currentBook.is_illustrated ? "Sí" : "No" }}</p>
+      <p>Full color: {{ currentBook.is_full_color ? "Sí" : "No" }}</p>
+      <p>Dimensiones: {{ currentBook.dimensions }}cms</p>
+    </Fieldset>
+  </Dialog>
+  <!--   <div
     v-else-if="currentBook && props.showBook.mode === 'toEdit'"
     class="scrollable-dialog"
+  > -->
+  <Dialog
+    v-model:visible="props.showBook.edit"
+    modal
+    dismissableMask
+    :style="{
+      width: '75vw',
+      border: 'none',
+      background: 'none',
+    }"
+    :breakpoints="{
+      '1400px': '80vw',
+      '1200px': '85vw',
+      '992px': '85vw',
+      '768px': '90vw',
+      '576px': '90vw',
+    }"
+    :pt="{
+      root: 'border-none',
+      mask: {
+        style: 'backdrop-filter: blur(2px)',
+      },
+    }"
+    :closeButtonProps="{ class: 'custom-close-button' }"
   >
     <BookForm :currentBook="currentBook" />
-  </div>
-  <p v-else>Libro no encontrado</p>
+  </Dialog>
+  <!-- </div> -->
 </template>
 <script setup>
 import BookForm from "@/components/BookForm.vue";
+import Dialog from "primevue/dialog";
 import Fieldset from "primevue/fieldset";
 import { computed } from "vue";
 import { useBookStore } from "@/stores/BookStore";
 
 const booksStore = useBookStore();
 const props = defineProps(["showBook"]);
+console.log("holi", props.showBook);
 
 const currentBook = computed(() => {
   return booksStore.books.find((book) => book.id === props.showBook.id);

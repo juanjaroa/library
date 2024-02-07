@@ -1,8 +1,15 @@
 <script setup>
 import { useRouter, RouterView } from "vue-router";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import SpeedDial from "primevue/speeddial";
 import BooksTable from "./components/BooksTable.vue";
+import { useAuthStore } from "@/stores/AuthStore";
+
+const authStore = useAuthStore();
+
+onMounted(() => {
+  authStore.getSession();
+});
 
 const router = useRouter();
 

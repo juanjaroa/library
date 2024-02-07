@@ -10,7 +10,7 @@ export const useBookStore = defineStore("BookStore", {
   },
   actions: {
     async fill() {
-      const { data } = await supabase.from("Books").select("*");
+      const { data, error } = await supabase.from("Books").select("*");
       this.books = data;
     },
     async addBook(newBook) {

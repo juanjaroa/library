@@ -4,18 +4,6 @@
       <span class="p-float-label">
         <InputText
           type="text"
-          name="book-id"
-          id="book-id"
-          v-model="formData.id"
-          placeholder="0000"
-          class="w-full"
-          size="small"
-        />
-        <label for="book-id">Id del Libro</label>
-      </span>
-      <span class="p-float-label">
-        <InputText
-          type="text"
           name="book-title"
           id="book-title"
           v-model="formData.title"

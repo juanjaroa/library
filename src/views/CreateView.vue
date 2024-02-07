@@ -18,11 +18,10 @@
       },
     }"
     @hide="router.push('/')"
+    :closeButtonProps="{ class: 'custom-close-button' }"
   >
-    <template #container="{ closeCallback }">
-      <BookForm v-if="authStore.localSession?.data.session" />
-      <h2 v-else>Ups... No estas autorizad@!</h2>
-    </template>
+    <BookForm v-if="authStore.localSession?.data.session" />
+    <h2 v-else>Ups... No estas autorizad@!</h2>
   </Dialog>
 </template>
 <script setup>
