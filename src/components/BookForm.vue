@@ -9,7 +9,6 @@
           v-model="formData.title"
           placeholder="Increible historia"
           class="w-full"
-          size="small"
         />
         <label for="book-title">Titulo del libro</label>
       </span>
@@ -21,7 +20,6 @@
           v-model="formData.author"
           placeholder="Jane Doe"
           class="w-full"
-          size="small"
         />
         <label for="author">Nombre del autor</label>
       </span>
@@ -33,7 +31,6 @@
           v-model="formData.category"
           placeholder="Crónica"
           class="w-full"
-          size="small"
         />
         <label for="category">Categoria / Genero</label>
       </span>
@@ -43,7 +40,7 @@
           id="price"
           v-model="formData.price"
           class="w-full"
-          size="small"
+          :inputProps="{ inputmode: 'numeric' }"
         />
         <label for="price">Precio</label>
       </span>
@@ -53,7 +50,7 @@
           id="pages"
           v-model="formData.pages"
           class="w-full"
-          size="small"
+          :inputProps="{ inputmode: 'numeric' }"
         />
         <label for="pages">Numero de paginas</label>
       </span>
@@ -64,7 +61,11 @@
           v-model="formData.publisher"
           placeholder="Editorial Jaguar"
           class="w-full"
-          size="small"
+          :pt="{
+            input: {
+              style: { height: '100%' },
+            },
+          }"
         />
         <label for="publisher">Editorial</label>
       </span>
@@ -75,7 +76,6 @@
           v-model="formData.edition"
           placeholder="Primera"
           class="w-full"
-          size="small"
         />
         <label for="edition">Edición</label>
       </span>
@@ -86,7 +86,6 @@
           v-model="formData.dimensions"
           placeholder="25x18,6"
           class="w-full"
-          size="small"
         />
         <label for="dimensions">Tamaño</label>
       </span>
