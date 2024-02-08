@@ -9,7 +9,6 @@
           v-model="formData.title"
           placeholder="Increible historia"
           class="w-full"
-          size="small"
         />
         <label for="book-title">Titulo del libro</label>
       </span>
@@ -21,7 +20,6 @@
           v-model="formData.author"
           placeholder="Jane Doe"
           class="w-full"
-          size="small"
         />
         <label for="author">Nombre del autor</label>
       </span>
@@ -33,7 +31,6 @@
           v-model="formData.category"
           placeholder="Crónica"
           class="w-full"
-          size="small"
         />
         <label for="category">Categoria / Genero</label>
       </span>
@@ -43,7 +40,7 @@
           id="price"
           v-model="formData.price"
           class="w-full"
-          size="small"
+          :inputProps="{ inputmode: 'numeric' }"
         />
         <label for="price">Precio</label>
       </span>
@@ -53,7 +50,7 @@
           id="pages"
           v-model="formData.pages"
           class="w-full"
-          size="small"
+          :inputProps="{ inputmode: 'numeric' }"
         />
         <label for="pages">Numero de paginas</label>
       </span>
@@ -64,7 +61,11 @@
           v-model="formData.publisher"
           placeholder="Editorial Jaguar"
           class="w-full"
-          size="small"
+          :pt="{
+            input: {
+              style: { height: '100%' },
+            },
+          }"
         />
         <label for="publisher">Editorial</label>
       </span>
@@ -75,7 +76,6 @@
           v-model="formData.edition"
           placeholder="Primera"
           class="w-full"
-          size="small"
         />
         <label for="edition">Edición</label>
       </span>
@@ -86,7 +86,6 @@
           v-model="formData.dimensions"
           placeholder="25x18,6"
           class="w-full"
-          size="small"
         />
         <label for="dimensions">Tamaño</label>
       </span>
@@ -153,6 +152,7 @@
         </label>
       </Fieldset>
     </div>
+
     <Button
       label="Actualizar"
       outlined
@@ -178,6 +178,27 @@ import Checkbox from "primevue/checkbox";
 import Button from "primevue/button";
 import { reactive, onMounted } from "vue";
 import { useBookStore } from "@/stores/BookStore";
+
+import { useToast } from "primevue/usetoast";
+
+const toast = useToast();
+
+const notifySubmitted = (title) => {
+  toast.add({
+    severity: "success",
+    summary: "Libro agregado!",
+    detail: `${title} se ha agregado al catálogo.`,
+    life: 5000,
+  });
+};
+const notifyUpdated = (title) => {
+  toast.add({
+    severity: "info",
+    summary: "Libro actualizado!",
+    detail: `${title} se ha actualizado correctamente.`,
+    life: 5000,
+  });
+};
 
 const props = defineProps({
   currentBook: {
@@ -245,11 +266,13 @@ const handleSubmit = () => {
   const newBook = createNewBook();
   bookStore.addBook(newBook);
   resetFormData();
+  notifySubmitted(newBook.title);
 };
 
 const handleUpdate = () => {
   const book = updateBook();
   bookStore.updateBook(book);
+  notifyUpdated(book.title);
 };
 
 // function to reset form data

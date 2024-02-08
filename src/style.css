@@ -147,3 +147,6 @@ fieldset.others .p-fieldset-content label {
   overflow: auto;
   padding: 0 0.5rem;
 } */
+.p-toast {
+  max-width: calc(100vw - 40px);
+}

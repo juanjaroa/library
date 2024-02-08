@@ -36,10 +36,7 @@
       <p>Dimensiones: {{ currentBook.dimensions }}cms</p>
     </Fieldset>
   </Dialog>
-  <!--   <div
-    v-else-if="currentBook && props.showBook.mode === 'toEdit'"
-    class="scrollable-dialog"
-  > -->
+
   <Dialog
     v-model:visible="props.showBook.edit"
     modal
@@ -66,7 +63,6 @@
   >
     <BookForm :currentBook="currentBook" />
   </Dialog>
-  <!-- </div> -->
 </template>
 <script setup>
 import BookForm from "@/components/BookForm.vue";
@@ -77,7 +73,6 @@ import { useBookStore } from "@/stores/BookStore";
 
 const booksStore = useBookStore();
 const props = defineProps(["showBook"]);
-console.log("holi", props.showBook);
 
 const currentBook = computed(() => {
   return booksStore.books.find((book) => book.id === props.showBook.id);

@@ -137,6 +137,18 @@ import Button from "primevue/button";
 import Tag from "primevue/tag";
 import SingleBook from "@/components/SingleBook.vue";
 import { useAuthStore } from "@/stores/AuthStore";
+import { useToast } from "primevue/usetoast";
+
+const toast = useToast();
+
+const notifyDeleted = (bookId) => {
+  toast.add({
+    severity: "error",
+    summary: "Libro eliminado",
+    detail: `Id: ${bookId} se ha eliminado del catálogo.`,
+    life: 5000,
+  });
+};
 
 const authStore = useAuthStore();
 
@@ -169,6 +181,7 @@ const selectBook = (bookId, mode) => {
 
 const deleteBook = (bookId) => {
   bookStore.deleteBook(bookId);
+  notifyDeleted(bookId);
 };
 </script>
 <style>

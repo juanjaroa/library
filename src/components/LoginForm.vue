@@ -11,40 +11,29 @@
         v-model="email"
         placeholder="usuario@email.com"
         class="w-full"
+        inputmode="email"
       />
       <label for="usermail">email del usuario</label>
     </span>
     <span class="p-float-label">
-      <Password id="password" v-model="password" :feedback="false" toggleMask />
+      <Password
+        id="password"
+        v-model="password"
+        :feedback="false"
+        toggleMask
+        required
+      />
       <label for="password">Contraseña</label>
     </span>
-    <Button
-      @click="signIn"
-      size="small"
-      icon="pi pi-key"
-      label="Login"
-      outlined
-    />
+    <Button @click="signIn" icon="pi pi-key" label="Login" outlined />
   </Fieldset>
   <Fieldset legend="Sesion iniciada" class="login" v-else>
     <p style="text-align: center">
       {{ authStore.getEmail }}
     </p>
-    <Button
-      @click="signOut"
-      size="small"
-      label="Cerrar sesion"
-      severity="danger"
-      outlined
-    />
+    <Button @click="signOut" label="Cerrar sesion" severity="danger" outlined />
   </Fieldset>
-  <Button
-    icon="pi pi-times"
-    rounded
-    size="small"
-    class="close-modal"
-    @click="closeModal"
-  />
+  <Button icon="pi pi-times" rounded class="close-modal" @click="closeModal" />
 </template>
 <script setup>
 import Fieldset from "primevue/fieldset";
