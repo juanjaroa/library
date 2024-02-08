@@ -85,7 +85,6 @@
             size="small"
             @click="selectBook(slotProps.data.id, 'edit')"
           />
-          <Toast />
           <Button
             v-if="authStore.localSession?.data.session"
             icon="pi pi-trash"
@@ -138,7 +137,6 @@ import Button from "primevue/button";
 import Tag from "primevue/tag";
 import SingleBook from "@/components/SingleBook.vue";
 import { useAuthStore } from "@/stores/AuthStore";
-import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 
 const toast = useToast();
