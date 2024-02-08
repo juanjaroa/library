@@ -13,7 +13,7 @@ jobs:
       id-token: 'write'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Use Node.js 20.11
         uses: actions/setup-node@v4
