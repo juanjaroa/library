@@ -17,7 +17,11 @@
   >
     <template #header>
       <div class="table-header">
-        <span>Catalogo del Jaguar</span>
+        <img
+          src="https://hrshkuejqqzfcwamsryo.supabase.co/storage/v1/object/public/library-assets/logo/casa-jaguar_logo-full.webp"
+          height="50"
+          alt="Casa Jaguar Tienda Andina"
+        />
         <IconField iconPosition="left" class="search">
           <InputIcon>
             <i class="pi pi-search" />
@@ -284,6 +288,14 @@ h4 {
   }
   .search {
     width: 100%;
+  }
+  .table-header {
+    img {
+      margin: 0 auto 1rem;
+      width: 80%;
+      max-width: 180px;
+      height: auto;
+    }
   }
 }
 
