@@ -32,7 +32,6 @@
     </template>
     <template #empty> No books found. </template>
     <template #loading> Loading books data. Please wait. </template>
-
     <Column
       field="title"
       header="Titulo"
@@ -97,36 +96,13 @@
             rounded
             outlined
             size="small"
-            @click="deleteBook(slotProps.data.id)"
+            @click="confirmDelete($event, slotProps.data)"
           />
         </div>
       </template>
     </Column>
   </DataTable>
-  <!-- <Dialog
-    v-model:visible="singleBookVisible"
-    modal
-    dismissableMask
-    :style="{ width: '75vw', border: 'none', background: 'none' }"
-    :breakpoints="{
-      '1400px': '80vw',
-      '1200px': '85vw',
-      '992px': '85vw',
-      '768px': '90vw',
-      '576px': '90vw',
-    }"
-    :pt="{
-      root: 'border-none',
-      mask: {
-        style: 'backdrop-filter: blur(2px)',
-      },
-    }"
-    contentClass="plop"
-  >
-    <template #container="{ closeCallback }"> -->
   <SingleBook :showBook="showBook" v-if="showBook" />
-  <!-- </template>
-  </Dialog> -->
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
@@ -142,15 +118,40 @@ import Tag from "primevue/tag";
 import SingleBook from "@/components/SingleBook.vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useToast } from "primevue/usetoast";
+import { useConfirm } from "primevue/useconfirm";
 
+const confirm = useConfirm();
 const toast = useToast();
 
-const notifyDeleted = (bookId) => {
+const notifyDeleted = (title) => {
   toast.add({
-    severity: "error",
+    severity: "info",
     summary: "Libro eliminado",
-    detail: `Id: ${bookId} se ha eliminado del catálogo.`,
+    detail: `${title} se ha eliminado del catálogo.`,
     life: 5000,
+  });
+};
+
+const confirmDelete = (event, book) => {
+  confirm.require({
+    target: event.currentTarget,
+    message: `¿Quieres eliminar este libro con id=${book.id}?`,
+    icon: "pi pi-info-circle",
+    rejectClass: "p-button-secondary p-button-outlined p-button-sm",
+    acceptClass: "p-button-danger p-button-sm",
+    rejectLabel: "Cancelar",
+    acceptLabel: "Borrar",
+    accept: () => {
+      deleteBook(book);
+    },
+    reject: () => {
+      toast.add({
+        severity: "error",
+        summary: "Cancelado",
+        detail: "Haz cancelado la eliinación del libro",
+        life: 3000,
+      });
+    },
   });
 };
 
@@ -183,9 +184,9 @@ const selectBook = (bookId, mode) => {
   };
 };
 
-const deleteBook = (bookId) => {
-  bookStore.deleteBook(bookId);
-  notifyDeleted(bookId);
+const deleteBook = (book) => {
+  bookStore.deleteBook(book.id);
+  notifyDeleted(book.title);
 };
 </script>
 <style>

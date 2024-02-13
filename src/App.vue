@@ -6,6 +6,7 @@ import BooksTable from "./components/BooksTable.vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
+import ConfirmPopup from "primevue/confirmpopup";
 
 const toast = useToast();
 
@@ -63,6 +64,8 @@ const navItems = ref([
 </script>
 
 <template>
+  <Toast />
+  <ConfirmPopup></ConfirmPopup>
   <RouterView />
   <BooksTable />
   <SpeedDial
@@ -77,7 +80,6 @@ const navItems = ref([
     :style="{ right: '1rem', bottom: '1rem' }"
     :transitionDelay="125"
   />
-  <Toast />
 </template>
 
 <style scoped></style>

@@ -150,3 +150,14 @@ fieldset.others .p-fieldset-content label {
 .p-toast {
   max-width: calc(100vw - 40px);
 }
+@layer primevue {
+  .p-confirm-popup::before {
+    border-width: 10px !important;
+  }
+}
+
+@layer primevue {
+  .p-confirm-popup::after {
+    border-width: 8px !important;
+}
+}

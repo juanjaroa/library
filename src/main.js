@@ -6,6 +6,7 @@ import PrimeVue from "primevue/config";
 
 import App from "./App.vue";
 import ToastService from "primevue/toastservice";
+import ConfirmationService from "primevue/confirmationservice";
 import "primevue/resources/themes/aura-dark-amber/theme.css"; // Tema
 import "primevue/resources/primevue.min.css"; // Estilos generales
 import "primeicons/primeicons.css"; // Iconos
@@ -17,4 +18,5 @@ app.use(router);
 app.use(pinia);
 app.use(PrimeVue, { inputStyle: "outlined", ripple: true });
 app.use(ToastService);
+app.use(ConfirmationService);
 app.mount("#app");
